@@ -1,11 +1,13 @@
+import style from './Note.module.css'
+
 export default function Note(props) {
     return (
         <tr>
-            <td>{props.id}</td>
-            <td>{props.title}</td>
-            <td>{props.content}</td>
-            <td><input type="checkbox" name="is_archived"/></td>
-            <td>x</td>
+            <td className={style.column}>{props.id}</td>
+            <td className={style.column}>{props.title}</td>
+            <td className={style.column}>{props.content}</td>
+            <td className={style.column}><input type="checkbox" name="is_archived"/></td>
+            <td className={style.column}>x</td>
         </tr>
     );
  }

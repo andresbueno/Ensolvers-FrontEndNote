@@ -1,38 +1,38 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+  width: 100%;
+  height: 100%;
   min-height: 100vh;
+  background-color: #f0f0f0;
+  /* background: #ffffff60;
+  background-image: url(https://www.wallpaperflare.com/static/136/180/841/minimalism-post-it-notes-yellow-green-wallpaper.jpg);
+  background-blend-mode: soft-light; */
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.contents{
+  /* border: 1px solid red; */
+  padding: 20px 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
-
-.App-link {
-  color: #61dafb;
+.notes{
+  flex-grow: 2;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.title{
+  padding: 30px 0;
+  font-size: 60px;
+  font-style: italic;
+  width: 100%;
+  height: 100px;
+  text-align: center;
 }
