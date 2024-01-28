@@ -1,21 +1,26 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Note from '../note/Note'
 import style from './Notes.module.css'
-import { useDispatch, useSelector } from 'react-redux';
-import { getNotes } from '../../redux/actions';
 
 export default function Notes(props) {
 
-   const notes = useSelector((state)=>state.notes);
-   const dispatch = useDispatch();
+   const [archived, setArchived] = useState(false);
+
+   const handleclick=()=>{
+      setArchived(!archived);      
+   }
 
    useEffect(()=>{
-      dispatch(getNotes());
-   }, [])
+      if(archived){
+         props.setNotesRendered(props.notesArchived)
+      }else {
+         props.setNotesRendered(props.notes)
+      }
+   },[archived])
 
    return <div>
-   
-      <h1 className={style.title}>Notes</h1>
+      <button onClick={handleclick}>{archived?"Show Actived":"Show Archived"}</button>
+      <h1 className={style.title}>{archived?"Notes Archived":"Notes Actived"}</h1>
       <table className={style.table}>
       <tr>
          <td className={style.column}>Id</td>
@@ -25,14 +30,17 @@ export default function Notes(props) {
          <td className={style.column}>Delete</td>
       </tr>
          {
-            notes.map((item)=>(
+            props.notesRendered?.map((item)=>(
                <Note
-                  id={item.id}
-                  title={item.title}
-                  content={item.content}
+               id={item.id}
+               title={item.title}
+               content={item.content}
+               showedNotes={archived?props.setNotesArchived:props.setNotes}
+               noShowedNotes={!archived?props.setNotesArchived:props.setNotes}
+               setNotesRendered={props.setNotesRendered}
                />
-            ))
-
+               ))
+               
          }
       </table>
    </div>;

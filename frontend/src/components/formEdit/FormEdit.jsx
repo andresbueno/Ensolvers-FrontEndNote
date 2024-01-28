@@ -1,4 +1,4 @@
-import style from "./Form.module.css";
+import style from "./FormEdit.module.css";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import axios from "axios";
