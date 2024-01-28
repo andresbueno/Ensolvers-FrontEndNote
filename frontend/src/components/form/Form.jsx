@@ -1,6 +1,5 @@
 import style from "./Form.module.css";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import axios from "axios";
 import {URL, NOTES} from '../../constants'
 
@@ -9,8 +8,6 @@ export default function Form(props) {
     title: "",
     content: "",
   });
-
-  const dispatch = useDispatch();
 
   const handleChange = (event) => {
     const property = event.target.name;
@@ -35,6 +32,10 @@ export default function Form(props) {
       })
       .then((response) => {
         props.setNotes((prevNotes) => [
+          ...prevNotes,
+          { id: response.data.id, title: response.data.title, content: response.data.content },
+        ]);
+        props.setNotesRendered((prevNotes) => [
           ...prevNotes,
           { id: response.data.id, title: response.data.title, content: response.data.content },
         ]);

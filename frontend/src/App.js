@@ -4,12 +4,18 @@ import Notes from './components/notes/Notes';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import {URL, NOTES} from './constants'
+import FormEdit from './components/formEdit/FormEdit'
 
 function App() {
 
   const [notes, setNotes] = useState([]);
   const [notesArchived, setNotesArchived] = useState([]);
   const [notesRendered, setNotesRendered] = useState([]);
+  const [modify, setModify] = useState(false);
+
+  const handleClick=()=>{
+    setModify(!modify);      
+  }
 
 
   useEffect(()=>{
@@ -26,7 +32,11 @@ function App() {
     <div className="App">
       <h1 className='title'>Notes Application</h1>
       <div className='contents'>
-        <Form setNotes={setNotes} />
+          {
+            modify?<FormEdit setNotes={setNotes}/>:<Form setNotes={setNotes} setNotesRendered={setNotesRendered}/>
+          }
+          
+          <a className='link' onClick={handleClick}>{modify?"Create Note":"Modify Note"}</a>
       </div>
       <div className='contents notes'>
         <Notes  notes={notes} setNotes={setNotes} setNotesArchived={setNotesArchived} notesArchived={notesArchived} setNotesRendered={setNotesRendered} notesRendered={notesRendered}/>

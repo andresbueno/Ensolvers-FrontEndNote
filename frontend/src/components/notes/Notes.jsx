@@ -19,7 +19,7 @@ export default function Notes(props) {
    },[archived])
 
    return <div>
-      <button onClick={handleclick}>{archived?"Show Actived":"Show Archived"}</button>
+      <button className={style.button} onClick={handleclick}>{archived?"Show Actived":"Show Archived"}</button>
       <h1 className={style.title}>{archived?"Notes Archived":"Notes Actived"}</h1>
       <table className={style.table}>
       <tr>

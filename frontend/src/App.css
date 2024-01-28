@@ -16,7 +16,11 @@
   align-items: flex-start;
   flex-wrap: wrap;
 }
-
+.link{
+  align-self: flex-end;
+  cursor: pointer;
+  color: rgb(73, 73, 73)
+}
 .contents{
   /* border: 1px solid red; */
   padding: 20px 30px;
