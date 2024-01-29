@@ -17,9 +17,13 @@
   flex-wrap: wrap;
 }
 .link{
-  align-self: flex-end;
-  cursor: pointer;
-  color: rgb(73, 73, 73)
+  margin-top: 20px;
+  padding: 5px 12px;
+  border-radius: 10%;
+  font-weight: bold;
+  font-size: 18px;
+  border: 1px solid black;
+  background-color: #f0f0f0;
 }
 .contents{
   /* border: 1px solid red; */
