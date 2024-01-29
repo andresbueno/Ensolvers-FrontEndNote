@@ -4,23 +4,21 @@ import style from './Notes.module.css'
 
 export default function Notes(props) {
 
-   const [archived, setArchived] = useState(false);
-
    const handleclick=()=>{
-      setArchived(!archived);      
+      props.setArchived(!props.archived);      
    }
 
    useEffect(()=>{
-      if(archived){
+      if(props.archived){
          props.setNotesRendered(props.notesArchived)
       }else {
          props.setNotesRendered(props.notes)
       }
-   },[archived])
+   },[props.archived])
 
    return <div>
-      <button className={style.button} onClick={handleclick}>{archived?"Show Actived":"Show Archived"}</button>
-      <h1 className={style.title}>{archived?"Notes Archived":"Notes Actived"}</h1>
+      <button className={style.button} onClick={handleclick}>{props.archived?"Show Actived":"Show Archived"}</button>
+      <h1 className={style.title}>{props.archived?"Notes Archived":"Notes Actived"}</h1>
       <table className={style.table}>
       <tr>
          <td className={style.column}>Id</td>
@@ -35,8 +33,8 @@ export default function Notes(props) {
                id={item.id}
                title={item.title}
                content={item.content}
-               showedNotes={archived?props.setNotesArchived:props.setNotes}
-               noShowedNotes={!archived?props.setNotesArchived:props.setNotes}
+               showedNotes={props.archived?props.setNotesArchived:props.setNotes}
+               noShowedNotes={!props.archived?props.setNotesArchived:props.setNotes}
                setNotesRendered={props.setNotesRendered}
                />
                ))

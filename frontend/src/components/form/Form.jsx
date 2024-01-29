@@ -35,10 +35,16 @@ export default function Form(props) {
           ...prevNotes,
           { id: response.data.id, title: response.data.title, content: response.data.content },
         ]);
-        props.setNotesRendered((prevNotes) => [
-          ...prevNotes,
-          { id: response.data.id, title: response.data.title, content: response.data.content },
-        ]);
+        if(!props.archived){
+          props.setNotesRendered((prevNotes) => [
+            ...prevNotes,
+            { id: response.data.id, title: response.data.title, content: response.data.content },
+          ]);
+        }
+        setForm({
+          title: "",
+          content: "",
+        })
         console.log("Respuesta:", response.data);
       })
       .catch((error) => {

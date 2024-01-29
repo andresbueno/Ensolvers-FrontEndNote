@@ -3,8 +3,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { URL, NOTES } from "../../constants";
 
-export default function Form(props) {
+export default function FormEdit(props) {
   const [search, setSearch] = useState(false);
+  const [isArchived, setIsArchived] = useState(false);
 
   const [formEdit, setFormEdit] = useState({
     id: "",
@@ -22,25 +23,39 @@ export default function Form(props) {
     setSearch(true);
   }
 
-    useEffect(()=>{
-      if(search){
-        axios.get(`${URL}${NOTES}`).then(({ data }) => {
-          let valueTitle = "";
-          let valueContent = "";
-
-          data.map((item)=>{
-            if(item.id == formEdit.id){
-              valueTitle = item.title;
-              valueContent = item.content
-            }
-          
-          });
-
-          setFormEdit({id:formEdit.id, title:valueTitle, content:valueContent})
-          setSearch(false);
-        });
+  const updateNotes = (prevNotes) => 
+    prevNotes.map((note) => {
+      if(note.id == formEdit.id){
+        return {
+          ...note , 
+          title:formEdit.title,
+          content:formEdit.content
+        };
+      }else{
+        return note;
       }
-    }, [search])
+    })
+
+  useEffect(()=>{
+    if(search){
+      axios.get(`${URL}${NOTES}`).then(({ data }) => {
+        let valueTitle = "";
+        let valueContent = "";
+        
+        data.map((item)=>{
+          if(item.id == formEdit.id){
+            valueTitle = item.title;
+            valueContent = item.content;
+            setIsArchived(item.isArchived)
+          }
+        
+        });
+
+        setFormEdit({id:formEdit.id, title:valueTitle, content:valueContent})
+        setSearch(false);
+      });
+    }
+  }, [search])
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -58,14 +73,18 @@ export default function Form(props) {
         },
       })
       .then((response) => {
-        props.setNotes((prevNotes) => [
-          ...prevNotes,
-          {
-            id: formEdit.id,
-            title: response.data.title,
-            content: response.data.content,
-          },
-        ]);
+        if(!isArchived){ // active case 
+          props.setNotes(updateNotes);
+        }else{ // arcived case
+          props.setNotesArchived(updateNotes);
+        }
+        props.setNotesRendered(updateNotes);
+          setFormEdit({
+            id: "",
+            title: "",
+            content: "",
+          }
+        )
         console.log("Respuesta:", response.data);
       })
       .catch((error) => {
@@ -88,7 +107,7 @@ export default function Form(props) {
           onChange={handleChange}
           value={formEdit.id}
         />
-        <button onClick={searchId}>🔎</button>
+        <a className={style.link} onClick={searchId}>🔎</a>
       </div>
       <div>
         <label htmlFor="" className={style.label}>
